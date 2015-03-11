@@ -18,45 +18,48 @@ describe("models", function(){
             done();
         });
     });
-    describe("getPersonByName", function(){
-        var person;
-        beforeEach(function(done){
-            Person.getOneByName("Moe", function(err, _person){
-                person = _person;
-                done();
-            });
-        });
-        it("Person Is Moe", function(){
-           expect(person.name).toEqual("Moe"); 
-        });
-        
-    });
-    describe("getPersonById", function(){
-        var person;
-        beforeEach(function(done){
-            Person.getOneById(ids.moeId, function(err, _person){
-                person = _person;
-                done();
-            });
-        });
-        it("Returns Moe", function(){
-            expect(person.name).toEqual("Moe");
-        });
-        
-    });
-    describe("getAll", function(){
-        var people;
-        beforeEach(function(done){
-            Person.getAll(function(err, _people){
-                people = _people.map(function(person){
-                    return person.name;
-                });
-                done();
-            });
-        });
-        it("Returns [curly, larry, moe]", function(){
-            expect(people).toEqual(['Curly', 'Larry', 'Moe']);
-        });
-    });
     
+    describe("Person", function(){
+        describe("getPersonByName", function(){
+            var person;
+            beforeEach(function(done){
+                Person.getOneByName("Moe", function(err, _person){
+                    person = _person;
+                    done();
+                });
+            });
+            it("Person Is Moe", function(){
+               expect(person.name).toEqual("Moe"); 
+            });
+            
+        });
+        describe("getPersonById", function(){
+            var person;
+            beforeEach(function(done){
+                Person.getOneById(ids.moeId, function(err, _person){
+                    person = _person;
+                    done();
+                });
+            });
+            it("Returns Moe", function(){
+                expect(person.name).toEqual("Moe");
+            });
+            
+        });
+        describe("getAll", function(){
+            var people;
+            beforeEach(function(done){
+                Person.getAll(function(err, _people){
+                    people = _people.map(function(person){
+                        return person.name;
+                    });
+                    done();
+                });
+            });
+            it("Returns [curly, larry, moe]", function(){
+                expect(people).toEqual(['Curly', 'Larry', 'Moe']);
+            });
+        });
+
+    });
 });
