@@ -1,7 +1,7 @@
 var mongoose = require("mongoose");
 var PersonSchema = new mongoose.Schema({
     name:String,
-    things : [{type : mongoose.Schema.ObjectId, ref : "Things"}],
+    things : [{type: mongoose.Schema.ObjectId, ref: "Thing"}],
     numberOfThings : {type : Number, default : 0}
 });
 var ThingSchema = new mongoose.Schema({
@@ -11,16 +11,16 @@ var ThingSchema = new mongoose.Schema({
 });
 
 PersonSchema.statics.getOneByName = function(name, cb){
-    this.findOne({name:name}).populate("Things").exec(cb);
+    this.findOne({name:name}).populate("things").exec(cb);
 };
 
 PersonSchema.statics.aquire = function(personId, thingId, cb){ // error here somewhere
     var qry = {_id:personId};
-    var update = {$push : {things : thingId}, $inc : {numberOfThings : 1}};
+    var update = {$push: {things : thingId}, $inc: {numberOfThings : 1}};
     this.update(qry, update, function(err){
         var tqry = {_id : thingId};
-        var tupdate = {$inc : {numberOwned : 1, numberInStock : -1}}
-        Thing.update(tqry, tupdate, function(err){
+        var tupdate = {$inc: {numberOwned : 1, numberInStock : -1}};
+        Thing.update(tqry, tupdate, function(){
             cb();
         });
     });

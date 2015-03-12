@@ -44,8 +44,9 @@ describe("models", function(){
                     expect(person.things.length).toEqual(1);
                 });
                 it("Moe has a rock", function(){ // error here somewhere
-                    // expect(person.things[0].name).toEqual("Rock");
-                    expect(person.things[0].id).toEqual(ids.rockId);
+                    console.log(person.things[0]);
+                    expect(person.things[0].name).toEqual("Rock");
+                    // expect(person.things[0].id).toEqual(ids.rockId);
                 });
                 it("Moe's number of things is 1", function(){
                     expect(person.numberOfThings).toEqual(1);
