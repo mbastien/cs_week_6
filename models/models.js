@@ -18,6 +18,10 @@ PersonSchema.statics.getOneById = function(id, cb){
     this.findOne({_id:id}, cb);
 };
 
+ThingSchema.statics.getOneById = function(id, cb){
+    this.findOne({_id:id}, cb);
+};
+
 PersonSchema.statics.getAll = function(cb){
     this.find({}).sort("name").exec(cb);
 };

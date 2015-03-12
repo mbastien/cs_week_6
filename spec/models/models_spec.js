@@ -6,10 +6,13 @@ describe("models", function(){
     var ids = {};
     beforeEach(function(done){
         db.connect(function(){
-            models.seed(function(err, moe, larry, curly){
+            models.seed(function(err, moe, larry, curly, r, p, s){
                 ids.moeId = moe.id;
                 ids.larryId = larry.id;
                 ids.curlyId = curly.id;
+                ids.rockId = r.id;
+                ids.paperId = p.id;
+                ids.scissorsId = s.id;
                 done();
             });
         });
@@ -32,7 +35,6 @@ describe("models", function(){
             it("Person Is Moe", function(){
                expect(person.name).toEqual("Moe"); 
             });
-            
         });
         describe("getPersonById", function(){
             var person;
@@ -61,7 +63,6 @@ describe("models", function(){
                 expect(people).toEqual(['Curly', 'Larry', 'Moe']);
             });
         });
-
     });
     
     describe("Thing", function(){
@@ -75,6 +76,18 @@ describe("models", function(){
             });
             it("Should be Rock", function(){
                 
+                expect(thing.name).toEqual("Rock");
+            });
+        });
+        describe("get thing by id", function(){
+            var thing;
+            beforeEach(function(done){
+                Thing.getOneById(ids.rockId, function(err, _thing){
+                    thing = _thing;
+                    done();
+                });
+            });
+            it("Should be Rock", function(){
                 expect(thing.name).toEqual("Rock");
             });
         });
