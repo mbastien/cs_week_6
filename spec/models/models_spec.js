@@ -1,3 +1,4 @@
+// can use --captureExceptions
 var models = require("../../models/models");
 var Person = models.Person;
 var Thing = models.Thing;
@@ -24,6 +25,40 @@ describe("models", function(){
     });
     
     describe("Person", function(){
+        describe("Aquire", function(){
+            describe("Moe gets a rock", function(){
+                var thing;
+                var person;
+                beforeEach(function(done){
+                    Person.aquire(ids.moeId, ids.rockId, function(){
+                        Thing.getOneByName("Rock", function(err, _thing){
+                            thing = _thing;
+                            Person.getOneByName("Moe", function(err, _person){
+                                person = _person;
+                                done();
+                            });
+                        });
+                    });
+                });
+                it("Moe has one thing", function(){
+                    expect(person.things.length).toEqual(1);
+                });
+                it("Moe has a rock", function(){ // error here somewhere
+                    // expect(person.things[0].name).toEqual("Rock");
+                    expect(person.things[0].id).toEqual(ids.rockId);
+                });
+                it("Moe's number of things is 1", function(){
+                    expect(person.numberOfThings).toEqual(1);
+                });
+                it("Rock has one owner", function(){
+                    expect(thing.numberOwned).toEqual(1);
+                });
+                it("Rock has 9 items left in stock", function(){
+                    expect(thing.numberInStock).toEqual(9);
+                });
+            });
+            
+        });
         describe("getPersonByName", function(){
             var person;
             beforeEach(function(done){
@@ -89,6 +124,20 @@ describe("models", function(){
             });
             it("Should be Rock", function(){
                 expect(thing.name).toEqual("Rock");
+            });
+        });
+        describe("getAll", function(){
+            var things;
+            beforeEach(function(done){
+                Thing.getAll(function(err, _things){
+                    things = _things.map(function(thing){
+                        return thing.name;
+                    });
+                    done();
+                });
+            });
+            it("Returns [paper, rock, scissors]", function(){
+                expect(things).toEqual(['Paper', 'Rock', 'Scissors']);
             });
         });
     });
